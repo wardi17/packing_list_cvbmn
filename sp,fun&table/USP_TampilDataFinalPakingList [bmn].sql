@@ -7,7 +7,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 
-CREATE PROCEDURE [dbo].[USP_TampilDataFinalPakingList]
+ALTER PROCEDURE [dbo].[USP_TampilDataFinalPakingList]
 @status VARCHAR(1),
 @tahun  INT,
 @userid VARCHAR(100)
@@ -41,6 +41,7 @@ BEGIN
         DatePosting DATETIME,
         id_bl_awb CHAR(50),
 		Note2 VARCHAR(8000),
+        NamaProduk VARCHAR(30)
     );
 
     -- Jika status = 'Y', ambil semua data tahun itu
@@ -51,7 +52,7 @@ BEGIN
             p.No_Pls, p.No_Pli, p.NoPo, p.POTransacid, p.EntryDate, p.Note, p.supid,
             p.LastUserIDAccess,
             [bmn].[dbo].FunSumDetailPakingList_KURS_Temporary(p.No_Pls) AS Totaldetail,
-            p.Pib, p.Forwarder, p.Total, p.UserPosting, p.DatePosting, p.id_bl_awb,Note2
+            p.Pib, p.Forwarder, p.Total, p.UserPosting, p.DatePosting, p.id_bl_awb,p.Note2,p.NamaProduk
         FROM [bmn].[dbo].POPAKINGLIST_KURS_Temporary p
         WHERE 
             YEAR(p.EntryDate) = @tahun 
@@ -67,7 +68,7 @@ BEGIN
             p.No_Pls, p.No_Pli, p.NoPo, p.POTransacid, p.EntryDate, p.Note, p.supid,
             p.LastUserIDAccess,
             [bmn].[dbo].FunSumDetailPakingList_KURS_Temporary(p.No_Pls) AS Totaldetail,
-            p.Pib, p.Forwarder, p.Total, p.UserPosting, p.DatePosting, p.id_bl_awb,Note2
+            p.Pib, p.Forwarder, p.Total, p.UserPosting, p.DatePosting, p.id_bl_awb,p.Note2,p.NamaProduk
         FROM [bmn].[dbo].POPAKINGLIST_KURS_Temporary p
         WHERE 
             YEAR(p.EntryDate) = @tahun 
@@ -81,7 +82,7 @@ BEGIN
     -- Ambil hasil akhir
     SELECT 
         No_Pls, No_Pli, NoPo, POTransacid, EntryDate, Note, supid, userid,
-        Totaldetail, Pib, Forwarder, Total, UserPosting, DatePosting, id_bl_awb,Note2
+        Totaldetail, Pib, Forwarder, Total, UserPosting, DatePosting, id_bl_awb,Note2,NamaProduk
     FROM #temptess
     ORDER BY No_Pls ASC;
 END

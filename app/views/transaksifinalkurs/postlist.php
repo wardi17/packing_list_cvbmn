@@ -153,6 +153,7 @@ $userlog = (isset($_SESSION['login_user'])) ?  $_SESSION['login_user'] : '';
               <input type="hidden" name="Pib" value="${b.Pib}">
               <input type="hidden" name="Forwarder" value="${b.Forwarder}">
               <input type="hidden" name="Total" value="${b.Total}">
+               <input type="hidden" name="NamaProduk" value="${b.NamaProduk}">
               <button type="submit" class="btn btn-info" title="Details"><i class="fa-solid fa-eye"></i></button>
             </form>
           </td>

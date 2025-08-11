@@ -60,6 +60,7 @@ class FPDF_AutoWrapTable extends FPDF
         $kurslanded       = $header["kurslanded"];
         $total_usd_only   = $header["total_usd_only"];
         $total_idr_only    = $header["total_idr_only"];
+        $NamaProduk        = $header["NamaProduk"];
 
         $this->ln(0);
         // Set font for the document
@@ -87,7 +88,20 @@ class FPDF_AutoWrapTable extends FPDF
         $x = $this->GetX();
         $width = 10;
         $this->SetAutoPageBreak(true, 30);
+        //Nama Produk
+        $this->MultiCell(103, 5,$NamaProduk, 0, 'L', FALSE);
+      
+
+        //AND nama produk
         // Buyer details
+       // Ambil Y terakhir setelah cetak Nama Produk
+        $x = $this->GetX();
+        $y = $this->GetY();
+
+
+
+        // Pindah posisi ke bawah Nama Produk
+        $this->SetXY($x, $y);
         $this->MultiCell($width + 10, 5, 'THE BUYER ', 0, 'L', FALSE);
         $this->SetXY($x + $width + 10, $y);
         $this->MultiCell(3, 5, ':', 0, 'L', FALSE);
@@ -140,13 +154,28 @@ class FPDF_AutoWrapTable extends FPDF
         $this->SetWidths(array(8, 15, 55, 18, 10, 18, 18, 18, 18, 18, 18, 18, 18, 15));
         $this->SetAligns(array('C', 'L', 'L', 'R', 'C', 'R', 'R', 'R', 'R', 'R', 'R', 'R', 'R', 'R'));
 
+        $kursvilter="";
         foreach ($detail as $baris) {
+
+            $isNotKurs = ($baris['Kurs'] === "0");
+            $kursvilter = $baris['Kurs'];
+            $Hpp_awal  = $isNotKurs ? $baris['Price']       : $baris['Hpp_Awal'];
+            $Amount_Rp = $isNotKurs ? $baris['Amount_USD']  : $baris['Amount_Rp'];
+
             $isExcluded = ($baris['Partid'] === "01.001.163");
-            $kurs_akhir     = $isExcluded ? "" : $baris['Kurs_Akhir'];
-            $amount_akhir   = $isExcluded ? "" : $baris['Amount_Akhir'];
-            $hpp_akhir      = $isExcluded ? "" : $baris['Hpp_Akhir'];
-            $selisih_hpp    = $isExcluded ? "" : $baris["Selisih_Hpp"];
-            $this->Row(array(
+            $kurs_akhir = $isExcluded ? "" : $baris['Kurs_Akhir'];
+
+            $amount_akhir = $isExcluded
+                ? ""
+                : ($isNotKurs ? $baris['Amount_USD'] : $baris['Amount_Akhir']);
+
+            $hpp_akhir = $isExcluded
+                ? ""
+                : ($isNotKurs ? $baris['Price'] : $baris['Hpp_Akhir']);
+
+            $selisih_hpp = $isExcluded ? "" : $baris["Selisih_Hpp"];
+
+            $this->Row([
                 $baris['ItemNo'],
                 $baris['Partid'],
                 $baris['PartName'],
@@ -155,13 +184,14 @@ class FPDF_AutoWrapTable extends FPDF
                 $baris['Price'],
                 $baris['Amount_USD'],
                 $baris['Kurs'],
-                $baris['Hpp_Awal'],
-                $baris['Amount_Rp'],
+                $Hpp_awal,
+                $Amount_Rp,
                 $kurs_akhir,
                 $amount_akhir,
                 $hpp_akhir,
                 $selisih_hpp
-            ));
+            ]);
+
         }
 
 
@@ -185,6 +215,11 @@ class FPDF_AutoWrapTable extends FPDF
         // Note section - MENEMPEL ke TOTAL
         $currentY = $this->GetY(); // AMBIL POSISI SETELAH TOTAL
 
+       
+        $kursonly = $kursvilter == "0";
+        $usd_ttl_only = $kursonly  ? $total_idr_only : $total_usd_only;
+        $id_ttl_only = $kursonly ? $total_usd_only : $total_idr_only ;
+
         $this->SetXY(10, $currentY);
         $this->SetFont('Arial', 'B', 7);
         $this->MultiCell($width + 20, 5, 'Total item Product Only', 0, 'L', FALSE);
@@ -195,7 +230,7 @@ class FPDF_AutoWrapTable extends FPDF
         $this->SetXY($width + 48, $currentY);
         $this->MultiCell(3, 5, ':', 0, 'L', FALSE);
         $this->SetXY(58, $currentY);
-        $this->MultiCell(25, 5, $total_usd_only, 0, 'R', false);
+        $this->MultiCell(25, 5, $usd_ttl_only, 0, 'R', false);
 
         $y1 = $this->GetY();
         $this->SetFont('Arial', 'B', 7);
@@ -206,7 +241,7 @@ class FPDF_AutoWrapTable extends FPDF
         $this->SetXY($width + 48, $y1);
         $this->MultiCell(3, 5, ':', 0, 'L', FALSE);
         $this->SetXY(58, $y1);
-        $this->MultiCell(25, 5, $total_idr_only, 0, 'R', false);
+        $this->MultiCell(25, 5, $id_ttl_only, 0, 'R', false);
 
         $y7 = $this->GetY();
         $this->SetXY(10, $y7); // MULAI DARI X=10 & Y=sekarang
@@ -217,17 +252,8 @@ class FPDF_AutoWrapTable extends FPDF
         $this->SetXY(28, $y7);
         $this->MultiCell(85, 5, $Note, 0, 'L', false);
 
-        //  Cetak PIB
-        $x = 155;
-        /* $this->SetXY($x, $currentY);
-        $this->Cell(55, 5, 'PIB', 0, 0, 'L');
-        $this->Cell(7, 5, ': Rp.', 0, 0, 'C');
-        $this->Cell(22, 5, $Pib, 0, 0, 'R');
-        $this->Cell(5, 5, " - > ", 0, 0, 'L');
-        $this->Cell(22, 5, " Tidak Masuk HPP", 0, 1, 'L'); */
-
         //Cetak forwader
-
+        $x = 155;
         $y2 = $this->GetY();
         $this->SetXY($x, $currentY);
         $this->Cell(55, 5, 'BIAYA FORWARDER', 0, 0, 'L');
@@ -260,7 +286,7 @@ class FPDF_AutoWrapTable extends FPDF
         $this->Cell(2, 5, ':', 0, 0, 'C');
         $this->Cell(40, 5, $total_Prosentase . " %" . " ( 1 " . $currid . " =  Rp. " . $kurslanded . " )", 0, 1, 'L');
 
-
+    
 
         $this->SetY(-100);
     }

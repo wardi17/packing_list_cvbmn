@@ -166,6 +166,7 @@ function handleUpdateData(e) {
 
 
 function initializeEditMode() {
+   
     $(document).on("click", "#UpdateData", handleUpdateData);
     $("#detailforwader_edit").on("click", () => new TransakiForwoder_Edit('#app'));
     $(document).on("click", "#tambahforwader_edit", handleTambahForwaderEdit);

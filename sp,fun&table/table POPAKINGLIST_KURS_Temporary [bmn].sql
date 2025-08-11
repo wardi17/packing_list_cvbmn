@@ -45,10 +45,11 @@ CREATE TABLE [dbo].[POPAKINGLIST_KURS_Temporary](
 	PRIMARY KEY(No_Pls)
 )
 
-
-
-
 GO
+
+ALTER TABLE [dbo].[POPAKINGLIST_KURS_Temporary]
+ADD [NamaProduk] [VARCHAR] (30) NULL;
+
 
 CREATE TABLE FrowaderDetail_Temporary(
 	trsID int IDENTITY(1,1) PRIMARY KEY,

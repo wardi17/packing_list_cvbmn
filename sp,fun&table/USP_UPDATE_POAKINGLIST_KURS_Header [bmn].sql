@@ -7,7 +7,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 -- Alter Procedure
-CREATE PROCEDURE [dbo].[USP_UPDATE_POAKINGLIST_KURS_Header]
+ALTER PROCEDURE [dbo].[USP_UPDATE_POAKINGLIST_KURS_Header]
     @No_Pls VARCHAR(20),
     @No_Pli VARCHAR(200),
     @suplieid VARCHAR(150),
@@ -24,7 +24,8 @@ CREATE PROCEDURE [dbo].[USP_UPDATE_POAKINGLIST_KURS_Header]
     @total_usd FLOAT,
     @total_rp FLOAT,
     @total_amountakhir FLOAT,
-    @total_Prosentase FLOAT
+    @total_Prosentase FLOAT,
+    @NamaProduk VARCHAR(30)
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -33,7 +34,8 @@ BEGIN
           SET No_Pli =@No_Pli, POTransacid=@POTransacid, EntryDate=@EntryDate, Note=@Note,
             UpdateUserIDAccess=@UpdateUserIDAccess, UpdateDateAccess=@UpdateDateAccess, supid=@suplieid, NoPo=@NoPo, 
             Pib=@Pib, Forwarder=@Forwarder, Total=@Total, id_bl_awb=@id_bl_awb,
-             total_usd =@total_usd,total_rp=@total_rp,total_amountakhir=@total_amountakhir,total_Prosentase=@total_Prosentase
+             total_usd =@total_usd,total_rp=@total_rp,total_amountakhir=@total_amountakhir,
+             total_Prosentase=@total_Prosentase ,NamaProduk=@NamaProduk
         WHERE No_Pls=@No_Pls
         
 
@@ -43,7 +45,7 @@ GO
 
 
 	
-EXEC  USP_UPDATE_POAKINGLIST_KURS_Header
+/*EXEC  USP_UPDATE_POAKINGLIST_KURS_Header
             'BMI_PL250616103126',
             '',
             'CHILINK',
@@ -61,6 +63,6 @@ EXEC  USP_UPDATE_POAKINGLIST_KURS_Header
             '541575000.00',
             '543330450.00',
             '-175545000.00'
-/*select * from  POPAKINGLIST_KURS WHERE No_Pls='BMI_PL250611090931'*/ 
+select * from  POPAKINGLIST_KURS WHERE No_Pls='BMI_PL250611090931'*/ 
 
 

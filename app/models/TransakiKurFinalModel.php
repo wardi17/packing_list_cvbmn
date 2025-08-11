@@ -37,6 +37,7 @@ class TransakiKurFinalModel extends Models
     private $kurslanded;
     private $total_usd_only;
     private $total_idr_only;
+    private $NamaProduk;
 
     public function ListData($post)
     {
@@ -71,6 +72,8 @@ class TransakiKurFinalModel extends Models
                 "Total"       => $this->formatNumberOrEmpty($this->getOdbcValue($result, 'Total')),
                 "Status"      => $status,
                 "Note2"     => $this->getOdbcValue($result, 'Note2'),
+                "NamaProduk" => $this->getOdbcValue($result, 'NamaProduk'),
+
             ];
         }
 
@@ -146,10 +149,11 @@ class TransakiKurFinalModel extends Models
             '{$this->test_input($header["total_rp"])}',
             '{$this->test_input($header["total_amountakhir"])}',
             '{$this->test_input($header["total_Prosentase"])}',
-            '{$this->test_input($header["note"])}'
+            '{$this->test_input($header["note"])}',
+            '{$this->test_input($header["namaproduk"])}'
         ";
 
-        //$this->consol_war($query);
+       // $this->consol_war($query);
         return $this->db->baca_sql2($query) ? 1 : 0;
     }
 
@@ -288,6 +292,7 @@ class TransakiKurFinalModel extends Models
 
         $query = "USP_TampilDataFinalPakingList '" . $status . "','" . $tahun . "','" . $userid . "' ";
 
+        //die(var_dump($query));
         $result = $this->db->baca_sql2($query);
 
         $datas = [];
@@ -308,6 +313,7 @@ class TransakiKurFinalModel extends Models
                 "Total"       => $this->formatNumberOrEmpty($this->getOdbcValue($result, 'Total')),
                 "Status"      => $status,
                 "Note2"     => $this->getOdbcValue($result, 'Note2'),
+                "NamaProduk"     => $this->getOdbcValue($result, 'NamaProduk'),
             ];
         }
 
@@ -428,7 +434,8 @@ class TransakiKurFinalModel extends Models
             '{$this->test_input($header["total_usd"])}',
             '{$this->test_input($header["total_rp"])}',
             '{$this->test_input($header["total_amountakhir"])}',
-            '{$this->test_input($header["total_Prosentase"])}'
+            '{$this->test_input($header["total_Prosentase"])}',
+            '{$this->test_input($header["namaproduk"])}'
         ";
 
 
@@ -600,6 +607,7 @@ class TransakiKurFinalModel extends Models
             $this->total_usd_only   = number_format(rtrim(odbc_result($result, 'total_usd_only')), 0, '.', ',');
             $this->total_idr_only    = number_format(rtrim(odbc_result($result, 'total_idr_only')), 0, '.', ',');
             $this->currid           = rtrim(odbc_result($result, 'currid'));
+            $this->NamaProduk       = rtrim(odbc_result($result, 'NamaProduk'));
             $Hpp_Akhir = round(rtrim(odbc_result($result, 'Hpp_Akhir')), 0);
             $Hpp_Awal = round(rtrim(odbc_result($result, 'Hpp_Awal')), 0);
 
@@ -650,6 +658,7 @@ class TransakiKurFinalModel extends Models
             "kurslanded"        => $this->kurslanded,
             "total_usd_only"    => $this->total_usd_only,
             "total_idr_only"     => $this->total_idr_only,
+            "NamaProduk"        => $this->NamaProduk,
         ];
 
         $fulldata = [
@@ -722,6 +731,7 @@ class TransakiKurFinalModel extends Models
                 "UserPosting"     => rtrim(odbc_result($result, 'UserPosting')),
                 "DatePosting"     => rtrim(odbc_result($result, 'DatePosting')),
                 "Note2"       => rtrim(odbc_result($result, 'Note2')),
+                "NamaProduk" => rtrim(odbc_result($result, 'NamaProduk')),
             ];
         }
 

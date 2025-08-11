@@ -192,6 +192,7 @@ $userlog = (isset($_SESSION['login_user'])) ?  $_SESSION['login_user'] : '';
                                   <input type="hidden" name="Forwarder" value="${b.Forwarder}">
                                   <input type="hidden" name="Total" value="${b.Total}">
                                   <input type ="hidden" name="Note2" value="${b.Note2}">
+                                   <input type ="hidden" name="NamaProduk" value="${b.NamaProduk}">
                                   <button type="submit" class="btn btn-warning" title="Posting">
                                     <i class="fas fa-fan"></i>
                                   </button>
@@ -211,6 +212,7 @@ $userlog = (isset($_SESSION['login_user'])) ?  $_SESSION['login_user'] : '';
                                     <input type="hidden" name="Forwarder" value="${b.Forwarder}">
                                     <input type="hidden" name="Total" value="${b.Total}">
                                     <input type ="hidden" name="Note2" value="${b.Note2}">
+                                    <input type ="hidden" name="NamaProduk" value="${b.NamaProduk}">
                                     <button type="submit" class="btn btn-info" title="Edit">
                                         <i class="fa-solid fa-file-pen"></i>
                                     </button>

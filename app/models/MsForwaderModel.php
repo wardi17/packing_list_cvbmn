@@ -206,6 +206,8 @@ class MsForwaderModel  extends  Models
             "detaildata" => $this->DetaildataFinal($post)
         ];
 
+
+        //$this->consol_war($datafull);
         return $datafull;
     }
 
@@ -265,6 +267,8 @@ class MsForwaderModel  extends  Models
             MK.kategori, FD.IDKategori
         ORDER BY 
             MK.kategori ASC;";
+
+            
         $result = $this->db->baca_sql($query);
         $datas = [];
         while (odbc_fetch_row($result)) {

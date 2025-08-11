@@ -7,7 +7,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 -- Alter Procedure
-CREATE PROCEDURE [dbo].[USP_INSERT_POAKINGLIST_KURS_Header]
+ALTER PROCEDURE [dbo].[USP_INSERT_POAKINGLIST_KURS_Header]
     @No_Pls VARCHAR(20),
     @No_Pli VARCHAR(200),
     @suplieid VARCHAR(150),
@@ -24,7 +24,8 @@ CREATE PROCEDURE [dbo].[USP_INSERT_POAKINGLIST_KURS_Header]
     @total_rp FLOAT,
     @total_amountakhir FLOAT,
     @total_Prosentase FLOAT,
-    @Note2 TEXT
+    @Note2 TEXT,
+    @NamaProduk VARCHAR(30)
 
 AS
 BEGIN
@@ -41,13 +42,13 @@ BEGIN
             LastUserIDAccess, LastDateAccess, supid, NoPo, 
             Pib, Forwarder, Total, id_bl_awb,
             total_usd,total_rp,total_amountakhir,total_Prosentase,
-            Note2
+            Note2,NamaProduk
         )
         VALUES (
             @No_Pls, @No_Pli, @POTransacid, @EntryDate, @Note,
             @LastUserIDAccess, GETDATE(), @suplieid, @NoPo,
             @Pib, @Forwarder, @Total, @id_bl_awb,
-            @total_usd,@total_rp,@total_amountakhir,@total_Prosentase,@Note2
+            @total_usd,@total_rp,@total_amountakhir,@total_Prosentase,@Note2,@NamaProduk
         )
 
 

@@ -169,6 +169,14 @@ $userid =  $data["userid"];
                 <span id="keteranganError" class="error"></span>
               </div>
             </div>
+               <div  class="row mb-12 mb-2">
+                <label for="namaproduk" style="width:20%;" class="col-sm-2 col-form-label">Nama Produk</label>
+                <div class=" col-sm-6">
+                  <input  disabled  class="form-control" id="namaproduk" value="<?= $datapost["NamaProduk"] ?>">
+
+                  <span id="namaprodukError" class="error"></span>
+                </div>
+              </div>
             <!-- <div class="row mb-12 mb-2">
               <label for="pib" style="width: 20%;" class="col-sm-2 col-form-label">PIB</label>
               <div style="width:35%;" class="col-sm-6">

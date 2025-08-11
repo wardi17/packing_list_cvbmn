@@ -2,8 +2,7 @@ USE [bmn]
 GO
 SET ANSI_NULLS ON
 GO
-
-CREATE PROCEDURE [dbo].[USP_InsertForwaderTemp]
+ALTER PROCEDURE [dbo].[USP_InsertForwaderTemp]
     @No_Pls VARCHAR(20)
 AS
 BEGIN
@@ -17,8 +16,8 @@ BEGIN
     )
     BEGIN
         -- Masukkan data dari FrowaderDetail jika belum ada
-		INSERT INTO FrowaderDetail_Temporary (No_Pls, msID, rumus,hitungan,amount)
-        SELECT No_Pls, msID, rumus,hitungan,amount
+		INSERT INTO FrowaderDetail_Temporary (No_Pls, msID, rumus,hitungan,amount,IDKategori)
+        SELECT No_Pls, msID, rumus,hitungan,amount,IDKategori
         FROM FrowaderDetail
         WHERE No_Pls = @No_Pls; 
     END

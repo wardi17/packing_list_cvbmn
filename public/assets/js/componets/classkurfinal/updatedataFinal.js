@@ -22,7 +22,7 @@ class KurDataServiceFinal {
         const total_rp      = $("#total_rp").text();
         const total_amountakhir = $("#total_amountakhir").text();
         const total_Prosentase        =$("#total_Prosentase").text();
-
+        const namaproduk =  $("#namaproduk").val();
         let dataheader ={
           "transo"        :transnoHider,
           "suplieid"      :suplieid,
@@ -39,7 +39,7 @@ class KurDataServiceFinal {
           "total_rp"      :total_rp.replace(/\,/g,"").trim(),
           "total_amountakhir" :total_amountakhir.replace(/\,/g,"").trim(),
           "total_Prosentase"  :total_Prosentase.replace(/\,/g,"").trim(),
-          
+           "namaproduk"    :namaproduk,
         };
         return dataheader;
     }

@@ -5,7 +5,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE PROCEDURE [dbo].[USP_List_KursSudahPostingFinal]
+ALTER PROCEDURE [dbo].[USP_List_KursSudahPostingFinal]
 @status VARCHAR(1),
 @tahun  int,
 @userid VARCHAR(100)
@@ -33,7 +33,8 @@ AS
 		UserPosting CHAR(10),
 		DatePosting DATETIME,
 		id_bl_awb char(50),
-		Note2 VARCHAR(8000)
+		Note2 VARCHAR(8000),
+		NamaProduk VARCHAR(30)
 	);
 BEGIN
 
@@ -41,18 +42,18 @@ BEGIN
 		BEGIN
 			INSERT INTO #temptess
 			SELECT No_Pls,No_Pli,NoPo,POTransacid,EntryDate,Note,supid,LastUserIDAccess,[bmn].[dbo].FunSumDetailPakingList_KURS_Temporary(No_Pls) as Totaldetail,
-			Pib,Forwarder,Total,UserPosting,DatePosting,id_bl_awb,Note2
+			Pib,Forwarder,Total,UserPosting,DatePosting,id_bl_awb,Note2,NamaProduk
 			FROM  [bmn].[dbo].POPAKINGLIST_KURS_Temporary  WHERE YEAR(EntryDate) =@tahun AND FlagPosting='Y'   ORDER BY EntryDate DESC  ;
 		END
 	 ELSE
 		BEGIN
 			INSERT INTO #temptess
 			SELECT No_Pls,No_Pli,NoPo,POTransacid,EntryDate,Note,supid,LastUserIDAccess,[bmn].[dbo].FunSumDetailPakingList_KURS_Temporary(No_Pls) as Totaldetail,
-			Pib,Forwarder,Total,UserPosting,DatePosting,id_bl_awb,Note2
+			Pib,Forwarder,Total,UserPosting,DatePosting,id_bl_awb,Note2,NamaProduk
 			FROM  [bmn].[dbo].POPAKINGLIST_KURS_Temporary  WHERE YEAR(EntryDate) =@tahun AND LastUserIDAccess=@userid AND FlagPosting='Y'  ORDER BY EntryDate DESC  ;
 		END
 
-	SELECT 	No_Pls,No_Pli,NoPo,POTransacid,EntryDate,Note,supid,userid,Totaldetail,Pib,Forwarder,Total,UserPosting,DatePosting,id_bl_awb,Note2 FROM #temptess ORDER BY No_Pls ASC
+	SELECT 	No_Pls,No_Pli,NoPo,POTransacid,EntryDate,Note,supid,userid,Totaldetail,Pib,Forwarder,Total,UserPosting,DatePosting,id_bl_awb,Note2,NamaProduk FROM #temptess ORDER BY No_Pls ASC
 END
 
 

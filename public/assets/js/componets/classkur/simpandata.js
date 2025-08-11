@@ -24,6 +24,7 @@ class KurDataService {
         const total_amountakhir = $("#total_amountakhir").text();
         const total_Prosentase        =$("#total_Prosentase").text();
         const note = $("#note").val();
+        const namaproduk = $("#namaproduk").val(); 
 
         let dataheader ={
           "transo"        :transnoHider,
@@ -42,6 +43,7 @@ class KurDataService {
           "total_amountakhir" :total_amountakhir.replace(/\,/g,"").trim(),
           "total_Prosentase"  :total_Prosentase.replace(/\,/g,"").trim(),
           "note"          :note,
+          "namaproduk"    :namaproduk
 
           
         };
@@ -161,7 +163,7 @@ class KurDataService {
         const dataheader = this.getFormData();
         const detailforwader = this.ambilDataTabelForwader("#table_Detailforwader > tbody > tr");
         const detailkurdata = this.ambilDataTabelKurdata("#table_kurdata > tbody > tr");
-        // console.log(detailforwader);
+        // console.log(dataheader);
         // return;
         const fullData = {
             dataheader: dataheader,

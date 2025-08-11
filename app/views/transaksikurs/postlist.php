@@ -188,13 +188,14 @@ $userlog = (isset($_SESSION['login_user'])) ?  $_SESSION['login_user'] : '';
                                               <input type="hidden" class="form-control"name="supid" value ="${b.supid}">
                                               <input type="hidden" class="form-control"name="No_Pli" value ="${b.No_Pli}">
                                               <input type="hidden" class="form-control"name="No_Pls" value ="${b.No_Pls}">
-                                               <input type="hidden" class="form-control"name="EntryDate" value ="${EntryDate}">
+                                              <input type="hidden" class="form-control"name="EntryDate" value ="${EntryDate}">
                                               <input type="hidden" class="form-control"name="Note" value ="${b.Note}">
                                               <input type="hidden" class="form-control"name="POTransacid" value ="${b.POTransacid}">
                                               <input type="hidden" class="form-control"name="Pib" value ="${b.Pib}">
                                               <input type="hidden" class="form-control"name="Forwarder" value ="${b.Forwarder}">
                                               <input type="hidden" class="form-control"name="Total" value ="${b.Total}">
-                                                <input type="hidden" name="Note2" value="${b.Note2}">
+                                              <input type="hidden" name="Note2" value="${b.Note2}">
+                                              <input type="hidden"  name="NamaProduk"  value="${b.NamaProduk}">
                                               <button type="submit" class="btn btn-info"  title="Details"><i class="fa-solid fa-eye"></i></button>
                                             </form>
                                   </td>`;

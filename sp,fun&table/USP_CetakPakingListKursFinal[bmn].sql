@@ -6,7 +6,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE PROCEDURE [dbo].[USP_CetakPakingListKursFinal]
+ALTER PROCEDURE [dbo].[USP_CetakPakingListKursFinal]
     @transnoHider VARCHAR(20),
     @DOTransacID  VARCHAR(100)
 AS
@@ -51,7 +51,8 @@ BEGIN
         SupperiID      CHAR(10),
         SupperiName    VARCHAR(100),
         id_bl_awb      CHAR(50),
-        total_Prosentase FLOAT
+        total_Prosentase FLOAT,
+        NamaProduk VARCHAR(30)
     )
 
 		 -- Declare total variables
@@ -102,7 +103,8 @@ BEGIN
         d.CustomerID,
         d.CustName, 
         c.id_bl_awb,
-        ISNULL(c.total_Prosentase, 0) AS total_Prosentase
+        ISNULL(c.total_Prosentase, 0) AS total_Prosentase,
+        c.NamaProduk
     FROM dbo.POPAKINGLIST_KURSDETAIL_Temporary a
     LEFT JOIN dbo.POPAKINGLIST_KURS_Temporary c ON c.No_Pls = a.No_Pls
     LEFT JOIN dbo.supplier d ON d.CustomerID = c.supid
